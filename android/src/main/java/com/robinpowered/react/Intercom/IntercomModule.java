@@ -42,16 +42,13 @@ public class IntercomModule extends ReactContextBaseJavaModule {
                     new Registration().withEmail(options.getString("email"))
             );
             Log.i(TAG, "registerIdentifiedUser with userEmail");
-            callback.invoke(null, null);
         } else if (options.hasKey("userId") && options.getString("userId").length() > 0) {
             Intercom.client().registerIdentifiedUser(
                     new Registration().withUserId(options.getString("userId"))
             );
             Log.i(TAG, "registerIdentifiedUser with userId");
-            callback.invoke(null, null);
         } else {
             Log.e(TAG, "registerIdentifiedUser called with invalid userId or email");
-            callback.invoke("Invalid userId or email");
         }
     }
 
@@ -59,16 +56,13 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     public void registerUnidentifiedUser(Callback callback) {
         Intercom.client().registerUnidentifiedUser();
         Log.i(TAG, "registerUnidentifiedUser");
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void reset(@Nullable Callback callback) {
         Intercom.client().reset();
         Log.i(TAG, "reset");
-        if (callback != null) {
-            callback.invoke(null, null);
-        }
     }
 
     @ReactMethod
@@ -77,10 +71,10 @@ public class IntercomModule extends ReactContextBaseJavaModule {
             Map<String, Object> map = recursivelyDeconstructReadableMap(options);
             Intercom.client().updateUser(map);
             Log.i(TAG, "updateUser");
-            callback.invoke(null, null);
+            
         } catch (Exception e) {
             Log.e(TAG, "updateUser - unable to deconstruct argument map");
-            callback.invoke(e.toString());
+            
         }
     }
 
@@ -95,59 +89,59 @@ public class IntercomModule extends ReactContextBaseJavaModule {
                 Intercom.client().logEvent(eventName, deconstructedMap);
             }
             Log.i(TAG, "logEvent");
-            callback.invoke(null, null);
+            
         } catch (Exception e) {
             Log.e(TAG, "logEvent - unable to deconstruct metaData");
-            callback.invoke(e.toString());
+            
         }
     }
 
     @ReactMethod
     public void handlePushMessage(Callback callback) {
         Intercom.client().handlePushMessage();
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void displayMessenger(Callback callback) {
         Intercom.client().displayMessenger();
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void hideMessenger(Callback callback) {
         Intercom.client().hideMessenger();
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void displayMessageComposer(Callback callback) {
         Intercom.client().displayMessageComposer();
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void displayMessageComposerWithInitialMessage(String message, Callback callback) {
         Intercom.client().displayMessageComposer(message);
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void setUserHash(String userHash, Callback callback) {
         Intercom.client().setUserHash(userHash);
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void setHMAC(String hmac, String data, Callback callback) {
         Intercom.client().setSecureMode(hmac, data);
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
     public void displayConversationsList(Callback callback) {
         Intercom.client().displayConversationsList();
-        callback.invoke(null, null);
+        
     }
 
     @ReactMethod
@@ -155,11 +149,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
         try {
             int conversationCount = Intercom.client().getUnreadConversationCount();
-
-            callback.invoke(null, conversationCount);
         } catch (Exception ex) {
             Log.e(TAG, "logEvent - unable to get conversation count");
-            callback.invoke(ex.toString());
         }
     }
 
@@ -178,9 +169,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         try {
             Intercom.client().setLauncherVisibility(intercomVisibility);
 
-            callback.invoke(null, null);
+            
         } catch (Exception ex) {
-            callback.invoke(ex.toString());
         }
     }
 
@@ -191,9 +181,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         try {
             Intercom.client().setInAppMessageVisibility(intercomVisibility);
 
-            callback.invoke(null, null);
+            
         } catch (Exception ex) {
-            callback.invoke(ex.toString());
         }
     }
 
